@@ -3,7 +3,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 
 const Cart = () => {
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems,subTotal,tax,shipping,total } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
@@ -13,17 +13,26 @@ const Cart = () => {
       //we pass the id inside '{}' because if we not do this then action.payload want the id only that's why we pass {id} here and action.payload takes the id as 'Object.id'
       payload: { id },
     });
+    dispatch({
+      type: "calculatePrice",
+    });
   };
   const decrement = (id) => {
     dispatch({
       type: "decrement",
       payload: id,
     });
+    dispatch({
+      type: "calculatePrice",
+    });
   };
   const deleteHandler = (id) => {
     dispatch({
       type: "deleteFromCart",
       payload: id,
+    });
+    dispatch({
+      type: "calculatePrice",
     });
   };
 
@@ -54,10 +63,10 @@ const Cart = () => {
           )}
         </main>
         <aside>
-          <h2>Subtotal : ${2000}</h2>
-          <h2>Shipping : ${100}</h2>
-          <h2>Tax : ${20}</h2>
-          <h2>Total : ${12000}</h2>
+          <h2>Subtotal : ₹ {subTotal}</h2>
+          <h2>Shipping : ₹ {shipping}</h2>
+          <h2>Tax : ₹ {tax}</h2>
+          <h2>Total : ₹ {total}</h2>
         </aside>
       </div>
     </>
@@ -79,7 +88,7 @@ const CartItem = ({
 
       <article>
         <h3> {name}</h3>
-        <p>${price}</p>
+        <p>₹ {price}</p>
       </article>
 
       <div>
@@ -88,7 +97,7 @@ const CartItem = ({
         <button onClick={() => increment(id)}>+</button>
       </div>
 
-      <AiFillDelete onClick={() => deleteHandler()} />
+      <AiFillDelete onClick={() => deleteHandler(id)} />
     </div>
   </>
 );

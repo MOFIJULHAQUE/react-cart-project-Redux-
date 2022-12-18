@@ -1,10 +1,12 @@
 @import "./colors.scss";
 
 nav {
-  background-color: $secondary;
+  // background:linear-gradient(rgb(170, 170, 245),rgb(244, 106, 106)) ;
   display: flex;
+  background: linear-gradient(rgb(255, 143, 143),rgb(54, 158, 122));
+
   justify-content: space-between;
-  padding: 0 2rem;
+  padding: 1rem;
   > h2 {
     text-transform: uppercase;
     color: $primary;

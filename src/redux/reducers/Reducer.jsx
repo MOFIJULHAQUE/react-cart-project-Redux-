@@ -37,5 +37,15 @@ export const cartReducer = createReducer(
     deleteFromCart: (state, action) => {
       state.cartItems = state.cartItems.filter((i) => i.id !== action.payload);
     },
+
+    calculatePrice: (state) => {
+      let sum = 0;
+      state.cartItems.forEach((i) => (sum += i.price * i.quantity));
+      state.subTotal = sum;
+      state.shipping = state.subTotal > 1000 ? 0 : 200;
+      //here we put '+' in "state.tax" because , if we not doing this then our final calculation will be is showing in string format.
+      state.tax = +(state.subTotal * 0.18).toFixed();
+      state.total = state.subTotal + state.tax + state.shipping;
+    },
   }
 );

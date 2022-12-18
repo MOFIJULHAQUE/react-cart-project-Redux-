@@ -2,7 +2,7 @@ import React from "react";
 import img1 from "../assets/1.jpg";
 import img2 from "../assets/3.jpg";
 import { toast } from "react-hot-toast";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux";
 
 const Home = () => {
   const productList = [
@@ -14,17 +14,20 @@ const Home = () => {
     },
     {
       name: "SSC Book",
-      price: 999,
+      price: 499,
       imgSrc: img1,
       id: "12122121",
     },
   ];
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const addToCartHandler = (option) => {
     console.log(option);
-    dispatch({type:"addToCart",payload:option})
+    dispatch({ type: "addToCart", payload: option });
+    dispatch({
+      type: "calculatePrice",
+    });
     toast.success("Add to cart");
   };
 
@@ -50,24 +53,10 @@ const ProductCard = ({ name, id, price, handler, imgSrc }) => (
   <div className="productCard">
     <img src={imgSrc} alt={name} />
     <p>{name}</p>
-    <h4>${price}</h4>
+    <h4>₹ {price}</h4>
     <button onClick={() => handler({ name, price, id, quantity: 1, imgSrc })}>
       Add to Cart
     </button>
   </div>
 );
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
